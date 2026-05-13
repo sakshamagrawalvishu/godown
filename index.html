@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GodownPro ERP</title>
+<title>Maruti Sales ERP</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -124,7 +124,7 @@ tr:last-child td{border-bottom:none}
 <div class="login-card">
   <div style="text-align:center;margin-bottom:20px">
     <div style="width:48px;height:48px;background:var(--accent);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:10px">🏗</div>
-    <div class="login-title">GodownPro ERP</div>
+    <div class="login-title">Maruti Sales ERP</div>
     <div style="font-size:12px;color:var(--text2);margin-top:4px">Multi-Godown Inventory Management</div>
   </div>
   <div style="font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center">Select your role to continue</div>
@@ -172,7 +172,7 @@ tr:last-child td{border-bottom:none}
     <div class="logo">
       <div class="logo-icon">🏗</div>
       <div>
-        <div class="logo-text">GodownPro</div>
+        <div class="logo-text">Maruti Sales</div>
         <div class="logo-sub">ERP v2.0</div>
       </div>
     </div>
@@ -209,11 +209,11 @@ tr:last-child td{border-bottom:none}
   <div class="form-row-2">
     <div class="form-row">
       <div class="form-label">Supplier Name</div>
-      <input class="form-input" placeholder="Shree Cement Pvt Ltd" id="iw-supplier">
+      <input class="form-input" placeholder="Shree JANKRODHAK Cement Pvt Ltd" id="iw-supplier">
     </div>
     <div class="form-row">
       <div class="form-label">Vehicle Number</div>
-      <input class="form-input" placeholder="MP 09 AB 1234" id="iw-vehicle">
+      <input class="form-input" placeholder="CG 29 CU 1918" id="iw-vehicle">
     </div>
   </div>
   <div class="form-row-2">
@@ -258,11 +258,11 @@ tr:last-child td{border-bottom:none}
   <div class="form-row-2">
     <div class="form-row">
       <div class="form-label">Customer Name</div>
-      <input class="form-input" placeholder="Raj Constructions" id="ow-cust">
+      <input class="form-input" placeholder="AAAA Constructions" id="ow-cust">
     </div>
     <div class="form-row">
       <div class="form-label">Customer Phone</div>
-      <input class="form-input" placeholder="9876543210" id="ow-phone">
+      <input class="form-input" placeholder="9999999999" id="ow-phone">
     </div>
   </div>
   <div class="form-row-2">
@@ -306,11 +306,11 @@ tr:last-child td{border-bottom:none}
   <div class="form-row-2">
     <div class="form-row">
       <div class="form-label">From Godown</div>
-      <select class="form-select" id="tr-from"><option>Godown A – Indore</option><option>Godown B – Dewas</option><option>Godown C – Ujjain</option></select>
+      <select class="form-select" id="tr-from"><option>Godown A – KATGHORA</option><option>Godown B – KORBA</option><option>Godown C – Ujjain</option></select>
     </div>
     <div class="form-row">
       <div class="form-label">To Godown</div>
-      <select class="form-select" id="tr-to"><option>Godown B – Dewas</option><option>Godown A – Indore</option><option>Godown C – Ujjain</option></select>
+      <select class="form-select" id="tr-to"><option>Godown B – KORBA</option><option>Godown A – KATGHORA</option><option>Godown C – Ujjain</option></select>
     </div>
   </div>
   <div class="form-row-2">
@@ -326,7 +326,7 @@ tr:last-child td{border-bottom:none}
   <div class="form-row-2">
     <div class="form-row">
       <div class="form-label">Driver Name</div>
-      <input class="form-input" placeholder="Ramesh Kumar" id="tr-driver">
+      <input class="form-input" placeholder="SAKSHAM AGRAWAL" id="tr-driver">
     </div>
     <div class="form-row">
       <div class="form-label">Vehicle Number</div>
@@ -457,9 +457,9 @@ let users = [
 ];
 
 let inwardLog = [
-  { id:'INW-001', supplier:'Shree Cement', product:'Cement',    qty:'500 bags', godown:'Godown A', date:'2024-05-12', vehicle:'MP09AB1234', status:'received' },
-  { id:'INW-002', supplier:'TATA Steel',   product:'TMT Bars',  qty:'120 tons', godown:'Godown B', date:'2024-05-11', vehicle:'MP09XY5678', status:'received' },
-  { id:'INW-003', supplier:'ACC Ltd',      product:'Cement',    qty:'200 bags', godown:'Godown C', date:'2024-05-10', vehicle:'MP09GH9012', status:'pending' },
+  { id:'INW-001', supplier:'Shree Cement', product:'Cement',    qty:'500 bags', godown:'Godown A', date:'2024-05-12', vehicle:'CG09AB1234', status:'received' },
+  { id:'INW-002', supplier:'TATA Steel',   product:'TMT Bars',  qty:'120 tons', godown:'Godown B', date:'2024-05-11', vehicle:'CG09XY5678', status:'received' },
+  { id:'INW-003', supplier:'ACC Ltd',      product:'Cement',    qty:'200 bags', godown:'Godown C', date:'2024-05-10', vehicle:'CG09GH9012', status:'pending' },
 ];
 
 let orders = [
@@ -469,8 +469,8 @@ let orders = [
 ];
 
 let transfers = [
-  { id:'TRF-001', from:'Godown A', to:'Godown B', product:'TMT Bars', qty:'100 tons', driver:'Ramesh Kumar', vehicle:'MP09TR1234', date:'2024-05-11', status:'in-transit' },
-  { id:'TRF-002', from:'Godown C', to:'Godown A', product:'Cement',   qty:'50 bags',  driver:'Suresh Patel', vehicle:'MP09TR5678', date:'2024-05-09', status:'received'   },
+  { id:'TRF-001', from:'Godown A', to:'Godown B', product:'TMT Bars', qty:'100 tons', driver:'Ramesh Kumar', vehicle:'CG09TR1234', date:'2024-05-11', status:'in-transit' },
+  { id:'TRF-002', from:'Godown C', to:'Godown A', product:'Cement',   qty:'50 bags',  driver:'Suresh Patel', vehicle:'CG09TR5678', date:'2024-05-09', status:'received'   },
 ];
 
 /* ---- Auth ---- */
