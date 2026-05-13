@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GodownPro ERP</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#252d3d;
+  --border:#2a3348;--border2:#3a4460;
+  --text:#e8eaf0;--text2:#8b93a8;--text3:#5a6278;
+  --accent:#4f7df9;--accent2:#3560d0;
+  --green:#22c55e;--red:#ef4444;--amber:#f59e0b;--purple:#a855f7;--cyan:#06b6d4;
+  --green-bg:rgba(34,197,94,.12);--red-bg:rgba(239,68,68,.12);
+  --amber-bg:rgba(245,158,11,.12);--purple-bg:rgba(168,85,247,.12);
+  --cyan-bg:rgba(6,182,212,.12);--accent-bg:rgba(79,125,249,.12);
+  --r:10px;--r2:6px;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow:hidden;font-size:14px}
+.sidebar{width:220px;min-width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+.logo{padding:20px 16px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:-.3px}
+.logo-sub{font-size:10px;color:var(--text2);letter-spacing:.5px;text-transform:uppercase}
+.user-box{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.user-name{font-size:13px;font-weight:600}
+.user-role{font-size:11px;color:var(--text2)}
+.nav{padding:8px 0;flex:1}
+.nav-section{padding:8px 16px 4px;font-size:10px;color:var(--text3);letter-spacing:.8px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;color:var(--text2);font-size:13px}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent);border-left-color:var(--accent)}
+.nav-item i{font-size:16px;min-width:16px}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px}
+.topbar-title{font-size:16px;font-weight:700;flex:1}
+.badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.btn{padding:7px 14px;border-radius:var(--r2);border:none;cursor:pointer;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.content{flex:1;overflow-y:auto;padding:24px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.card-title{font-size:13px;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.card-val{font-size:24px;font-weight:700}
+.card-sub{font-size:11px;color:var(--text2);margin-top:4px}
+.section-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;color:var(--text2);font-size:11px;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--bg3)}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-green{background:var(--green-bg);color:var(--green)}
+.tag-red{background:var(--red-bg);color:var(--red)}
+.tag-amber{background:var(--amber-bg);color:var(--amber)}
+.tag-purple{background:var(--purple-bg);color:var(--purple)}
+.tag-cyan{background:var(--cyan-bg);color:var(--cyan)}
+.tag-accent{background:var(--accent-bg);color:var(--accent)}
+.progress-bar{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;transition:width .5s}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);padding:24px;width:520px;max-height:85vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.form-row{margin-bottom:14px}
+.form-label{font-size:12px;color:var(--text2);margin-bottom:6px}
+.form-input{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;outline:none}
+.form-input:focus{border-color:var(--accent)}
+.form-select{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;outline:none}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.alert{padding:10px 14px;border-radius:var(--r2);margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:13px}
+.alert-red{background:var(--red-bg);border:1px solid rgba(239,68,68,.2);color:var(--red)}
+.alert-amber{background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);color:var(--amber)}
+.mini-stat{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.mini-stat:last-child{border-bottom:none}
+.godown-bar{margin:8px 0}
+.godown-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg);flex-direction:column;gap:24px}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;width:380px}
+.login-title{font-size:22px;font-weight:800;margin-bottom:4px;text-align:center}
+.login-sub{font-size:13px;color:var(--text2);text-align:center;margin-bottom:24px}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.role-card{padding:12px;border:1.5px solid var(--border);border-radius:var(--r2);cursor:pointer;transition:all .15s;text-align:center}
+.role-card:hover{border-color:var(--accent);background:var(--accent-bg)}
+.role-card.sel{border-color:var(--accent);background:var(--accent-bg)}
+.role-card i{font-size:22px;display:block;margin-bottom:4px}
+.role-card-name{font-size:12px;font-weight:700}
+.role-card-desc{font-size:10px;color:var(--text2);margin-top:2px}
+.transfer-flow{display:flex;align-items:center;gap:12px;margin:12px 0}
+.gd-pill{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:8px 14px;font-size:13px;font-weight:600;flex:1;text-align:center}
+.timeline{padding:0}
+.tl-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;min-width:10px}
+.tl-content{flex:1}
+.tl-main{font-size:13px;font-weight:600}
+.tl-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.tl-time{font-size:11px;color:var(--text3)}
+.qr-box{width:80px;height:80px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text2);text-align:center}
+.tab-row{display:flex;gap:2px;margin-bottom:16px;background:var(--bg3);border-radius:var(--r2);padding:3px}
+.tab{padding:6px 14px;border-radius:4px;font-size:13px;cursor:pointer;color:var(--text2);transition:all .15s}
+.tab.active{background:var(--bg2);color:var(--text);font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:var(--bg3);border:1px solid var(--border2)}
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOGIN SCREEN
+     ============================================================ -->
+<div id="login" style="display:flex;align-items:center;justify-content:center;width:100%;background:var(--bg)">
+<div class="login-card">
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="width:48px;height:48px;background:var(--accent);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:10px">🏗</div>
+    <div class="login-title">GodownPro ERP</div>
+    <div style="font-size:12px;color:var(--text2);margin-top:4px">Multi-Godown Inventory Management</div>
+  </div>
+  <div style="font-size:12px;color:var(--text2);margin-bottom:10px;text-align:center">Select your role to continue</div>
+  <div class="role-grid">
+    <div class="role-card" onclick="selectRole('owner',this)">
+      <i class="ti ti-crown" style="color:var(--amber)"></i>
+      <div class="role-card-name">Owner</div>
+      <div class="role-card-desc">Full access</div>
+    </div>
+    <div class="role-card" onclick="selectRole('manager',this)">
+      <i class="ti ti-briefcase" style="color:var(--accent)"></i>
+      <div class="role-card-name">Manager</div>
+      <div class="role-card-desc">Sales & staff</div>
+    </div>
+    <div class="role-card" onclick="selectRole('godown',this)">
+      <i class="ti ti-building-warehouse" style="color:var(--green)"></i>
+      <div class="role-card-name">Godown Incharge</div>
+      <div class="role-card-desc">Stock updates</div>
+    </div>
+    <div class="role-card" onclick="selectRole('sales',this)">
+      <i class="ti ti-chart-bar" style="color:var(--purple)"></i>
+      <div class="role-card-name">Sales Staff</div>
+      <div class="role-card-desc">Orders & quotes</div>
+    </div>
+    <div class="role-card" onclick="selectRole('delivery',this)" style="grid-column:span 2">
+      <i class="ti ti-truck-delivery" style="color:var(--cyan)"></i>
+      <div class="role-card-name">Delivery Staff</div>
+      <div class="role-card-desc">Delivery schedule</div>
+    </div>
+  </div>
+  <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="doLogin()">
+    <i class="ti ti-login"></i> Login
+  </button>
+  <div id="login-err" style="display:none;color:var(--red);font-size:12px;text-align:center;margin-top:10px">Please select a role</div>
+</div>
+</div>
+
+<!-- ============================================================
+     MAIN APP SHELL
+     ============================================================ -->
+<div id="app" style="display:none;width:100%;flex:1;overflow:hidden">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🏗</div>
+      <div>
+        <div class="logo-text">GodownPro</div>
+        <div class="logo-sub">ERP v2.0</div>
+      </div>
+    </div>
+    <div class="user-box">
+      <div class="avatar" id="av" style="background:var(--accent-bg);color:var(--accent)">OW</div>
+      <div>
+        <div class="user-name" id="uname">Owner</div>
+        <div class="user-role" id="urole">Full Access</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <span class="badge tag-green"><i class="ti ti-circle-filled" style="font-size:8px"></i> Live</span>
+      <button class="btn btn-ghost btn-sm" onclick="openModal('notif-modal')"><i class="ti ti-bell"></i> 3 Alerts</button>
+      <button class="btn btn-danger btn-sm" onclick="logout()"><i class="ti ti-logout"></i> Logout</button>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODALS
+     ============================================================ -->
+
+<!-- Stock Inward Modal -->
+<div class="modal-bg" id="inward-modal">
+<div class="modal">
+  <div class="modal-title">Stock Inward Entry <button class="btn btn-ghost btn-sm" onclick="closeModal('inward-modal')"><i class="ti ti-x"></i></button></div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Supplier Name</div>
+      <input class="form-input" placeholder="Shree Cement Pvt Ltd" id="iw-supplier">
+    </div>
+    <div class="form-row">
+      <div class="form-label">Vehicle Number</div>
+      <input class="form-input" placeholder="MP 09 AB 1234" id="iw-vehicle">
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Product</div>
+      <select class="form-select" id="iw-product">
+        <option>TMT Bars</option><option>Cement</option><option>Steel Rods</option><option>Bricks</option><option>Sand</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Quantity</div>
+      <input class="form-input" type="number" placeholder="500" id="iw-qty">
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Unit</div>
+      <select class="form-select" id="iw-unit"><option>bags</option><option>tons</option><option>pieces</option><option>kg</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Assign Godown</div>
+      <select class="form-select" id="iw-godown"><option>Godown A – Indore</option><option>Godown B – Dewas</option><option>Godown C – Ujjain</option></select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-label">Invoice Upload (simulated)</div>
+    <div style="border:1px dashed var(--border2);border-radius:var(--r2);padding:16px;text-align:center;color:var(--text2);font-size:12px;cursor:pointer">
+      <i class="ti ti-upload" style="font-size:20px;display:block;margin-bottom:4px"></i> Click to upload invoice PDF
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-ghost" onclick="closeModal('inward-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="processInward()"><i class="ti ti-check"></i> Record & Generate QR</button>
+  </div>
+</div>
+</div>
+
+<!-- Stock Outward / Order Modal -->
+<div class="modal-bg" id="outward-modal">
+<div class="modal">
+  <div class="modal-title">Create Sales Order <button class="btn btn-ghost btn-sm" onclick="closeModal('outward-modal')"><i class="ti ti-x"></i></button></div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Customer Name</div>
+      <input class="form-input" placeholder="Raj Constructions" id="ow-cust">
+    </div>
+    <div class="form-row">
+      <div class="form-label">Customer Phone</div>
+      <input class="form-input" placeholder="9876543210" id="ow-phone">
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Product</div>
+      <select class="form-select" id="ow-product" onchange="autoAssignGodown()">
+        <option>TMT Bars</option><option>Cement</option><option>Steel Rods</option><option>Bricks</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Quantity Required</div>
+      <input class="form-input" type="number" placeholder="50" id="ow-qty" oninput="autoAssignGodown()">
+    </div>
+  </div>
+  <div class="form-row" id="auto-assign-row" style="display:none">
+    <div class="alert" style="background:var(--green-bg);border:1px solid rgba(34,197,94,.2);color:var(--green)">
+      <i class="ti ti-check"></i>
+      <div><b>Auto-assigned:</b> <span id="assign-result">Godown A</span> has sufficient stock. Dispatch slip will be generated.</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-label">Delivery Address</div>
+    <input class="form-input" placeholder="Plot 45, Industrial Area, Indore" id="ow-addr">
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-ghost" onclick="closeModal('outward-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="processOutward()"><i class="ti ti-file-invoice"></i> Create Order & Dispatch Slip</button>
+  </div>
+</div>
+</div>
+
+<!-- Inter-Godown Transfer Modal -->
+<div class="modal-bg" id="transfer-modal">
+<div class="modal">
+  <div class="modal-title">Inter-Godown Transfer <button class="btn btn-ghost btn-sm" onclick="closeModal('transfer-modal')"><i class="ti ti-x"></i></button></div>
+  <div class="transfer-flow">
+    <div class="gd-pill"><i class="ti ti-building-warehouse"></i> Source</div>
+    <i class="ti ti-arrow-right" style="color:var(--accent);font-size:20px"></i>
+    <div class="gd-pill"><i class="ti ti-building-warehouse"></i> Destination</div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">From Godown</div>
+      <select class="form-select" id="tr-from"><option>Godown A – Indore</option><option>Godown B – Dewas</option><option>Godown C – Ujjain</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">To Godown</div>
+      <select class="form-select" id="tr-to"><option>Godown B – Dewas</option><option>Godown A – Indore</option><option>Godown C – Ujjain</option></select>
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Product</div>
+      <select class="form-select" id="tr-prod"><option>TMT Bars</option><option>Cement</option><option>Steel Rods</option><option>Bricks</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Quantity</div>
+      <input class="form-input" type="number" placeholder="100" id="tr-qty">
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Driver Name</div>
+      <input class="form-input" placeholder="Ramesh Kumar" id="tr-driver">
+    </div>
+    <div class="form-row">
+      <div class="form-label">Vehicle Number</div>
+      <input class="form-input" placeholder="MP 09 XY 5678" id="tr-vehicle">
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-ghost" onclick="closeModal('transfer-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="processTransfer()"><i class="ti ti-arrows-transfer-up"></i> Initiate Transfer</button>
+  </div>
+</div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal-bg" id="notif-modal">
+<div class="modal">
+  <div class="modal-title">Alerts & Notifications <button class="btn btn-ghost btn-sm" onclick="closeModal('notif-modal')"><i class="ti ti-x"></i></button></div>
+  <div class="alert alert-red"><i class="ti ti-alert-circle"></i><div><b>Low Stock:</b> Cement at Godown C – only 100 bags remain (min: 200)</div></div>
+  <div class="alert alert-red"><i class="ti ti-alert-circle"></i><div><b>Low Stock:</b> Steel Rods at Godown B – only 15 tons remain (min: 20)</div></div>
+  <div class="alert alert-amber"><i class="ti ti-clock"></i><div><b>Dead Inventory:</b> Bricks at Godown A – no movement for 47 days</div></div>
+  <div class="alert alert-amber"><i class="ti ti-clock"></i><div><b>Pending Transfer:</b> 100T TMT Bars A→B awaiting receipt confirmation</div></div>
+  <div class="alert" style="background:var(--accent-bg);border:1px solid rgba(79,125,249,.2);color:var(--accent)">
+    <i class="ti ti-check"></i><div><b>Inward Complete:</b> 500 bags Cement received at Godown A (INV-2024-089)</div>
+  </div>
+</div>
+</div>
+
+<!-- Success / QR Modal -->
+<div class="modal-bg" id="success-modal">
+<div class="modal" style="text-align:center;padding:32px">
+  <div style="font-size:48px;margin-bottom:12px">✅</div>
+  <div style="font-size:18px;font-weight:700;margin-bottom:8px" id="success-title">Operation Successful</div>
+  <div style="color:var(--text2);font-size:13px;margin-bottom:16px" id="success-desc">Record saved successfully.</div>
+  <div id="qr-section" style="display:none;margin:16px 0">
+    <div class="qr-box" style="margin:auto;width:100px;height:100px;font-size:10px">
+      <div>
+        <div style="font-size:18px">⬛</div>
+        <div>QR Generated</div>
+        <div style="color:var(--text3);font-size:9px" id="qr-id">INV-0000</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-top:8px">Barcode & QR ready for printing</div>
+  </div>
+  <button class="btn btn-primary" onclick="closeModal('success-modal')">Done</button>
+</div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-bg" id="add-user-modal">
+<div class="modal">
+  <div class="modal-title">Add New Account <button class="btn btn-ghost btn-sm" onclick="closeModal('add-user-modal')"><i class="ti ti-x"></i></button></div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Full Name</div>
+      <input class="form-input" placeholder="Ramesh Kumar" id="au-name">
+    </div>
+    <div class="form-row">
+      <div class="form-label">Mobile</div>
+      <input class="form-input" placeholder="9876543210" id="au-mobile">
+    </div>
+  </div>
+  <div class="form-row-2">
+    <div class="form-row">
+      <div class="form-label">Role</div>
+      <select class="form-select" id="au-role">
+        <option>Manager</option><option>Godown Incharge</option><option>Sales Staff</option><option>Delivery Staff</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Assigned Godown</div>
+      <select class="form-select" id="au-godown">
+        <option>All Godowns</option><option>Godown A – Indore</option><option>Godown B – Dewas</option><option>Godown C – Ujjain</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-label">Email</div>
+    <input class="form-input" placeholder="ramesh@company.com" id="au-email">
+  </div>
+  <div class="form-row">
+    <div class="form-label">Password</div>
+    <input class="form-input" type="password" placeholder="Set login password" id="au-pass">
+  </div>
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+    <button class="btn btn-ghost" onclick="closeModal('add-user-modal')">Cancel</button>
+    <button class="btn btn-primary" onclick="addUser()"><i class="ti ti-user-plus"></i> Create Account</button>
+  </div>
+</div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT – ALL LOGIC
+     ============================================================ -->
+<script>
+/* ---- Role & Nav Config ---- */
+const ROLES = {
+  owner:    { name:'Owner',           role:'Full Access',      abbr:'OW', color:'--amber',  nav:['dashboard','stock','inward','outward','transfer','sales','purchases','profits','accounts','users'] },
+  manager:  { name:'Manager',         role:'Manager',          abbr:'MG', color:'--accent', nav:['dashboard','stock','inward','outward','transfer','sales','purchases','accounts','users'] },
+  godown:   { name:'Godown Incharge', role:'Godown Incharge',  abbr:'GI', color:'--green',  nav:['stock','inward','outward','transfer'] },
+  sales:    { name:'Sales Staff',     role:'Sales Staff',      abbr:'SS', color:'--purple', nav:['outward','sales'] },
+  delivery: { name:'Delivery Staff',  role:'Delivery Staff',   abbr:'DS', color:'--cyan',   nav:['delivery'] }
+};
+
+const NAV_ITEMS = {
+  dashboard: { icon:'ti-dashboard',          label:'Dashboard' },
+  stock:     { icon:'ti-stack-2',             label:'Stock Overview' },
+  inward:    { icon:'ti-package-import',      label:'Stock Inward' },
+  outward:   { icon:'ti-package-export',      label:'Stock Outward' },
+  transfer:  { icon:'ti-arrows-transfer-up',  label:'Inter-Godown Transfer' },
+  sales:     { icon:'ti-receipt',             label:'Sales & Orders' },
+  purchases: { icon:'ti-shopping-cart',       label:'Purchase Approval' },
+  profits:   { icon:'ti-trending-up',         label:'Profit Tracking' },
+  accounts:  { icon:'ti-wallet',              label:'Accounts' },
+  users:     { icon:'ti-users',               label:'User Management' },
+  delivery:  { icon:'ti-truck',               label:'Delivery Schedule' }
+};
+
+/* ---- App State ---- */
+let currentRole = 'owner';
+let currentPage = 'dashboard';
+let selectedRole = null;
+
+let users = [
+  { name:'Arun Sharma',  mobile:'9876501001', role:'Manager',          godown:'All Godowns',      email:'arun@co.com',  status:'active' },
+  { name:'Vijay Patel',  mobile:'9876501002', role:'Godown Incharge',  godown:'Godown A – Indore', email:'vijay@co.com', status:'active' },
+  { name:'Priya Singh',  mobile:'9876501003', role:'Sales Staff',      godown:'All Godowns',      email:'priya@co.com', status:'active' },
+  { name:'Ramu Yadav',   mobile:'9876501004', role:'Delivery Staff',   godown:'Godown B – Dewas',  email:'ramu@co.com',  status:'active' },
+];
+
+let inwardLog = [
+  { id:'INW-001', supplier:'Shree Cement', product:'Cement',    qty:'500 bags', godown:'Godown A', date:'2024-05-12', vehicle:'MP09AB1234', status:'received' },
+  { id:'INW-002', supplier:'TATA Steel',   product:'TMT Bars',  qty:'120 tons', godown:'Godown B', date:'2024-05-11', vehicle:'MP09XY5678', status:'received' },
+  { id:'INW-003', supplier:'ACC Ltd',      product:'Cement',    qty:'200 bags', godown:'Godown C', date:'2024-05-10', vehicle:'MP09GH9012', status:'pending' },
+];
+
+let orders = [
+  { id:'ORD-001', customer:'Raj Constructions', product:'TMT Bars',  qty:'50 tons',  godown:'Godown A', date:'2024-05-12', status:'dispatched', val:'₹18,00,000' },
+  { id:'ORD-002', customer:'Dev Builders',       product:'Cement',    qty:'100 bags', godown:'Godown B', date:'2024-05-11', status:'delivered',  val:'₹38,000'    },
+  { id:'ORD-003', customer:'Mahesh Infra',       product:'Steel Rods',qty:'20 tons',  godown:'Godown A', date:'2024-05-10', status:'pending',    val:'₹9,60,000'  },
+];
+
+let transfers = [
+  { id:'TRF-001', from:'Godown A', to:'Godown B', product:'TMT Bars', qty:'100 tons', driver:'Ramesh Kumar', vehicle:'MP09TR1234', date:'2024-05-11', status:'in-transit' },
+  { id:'TRF-002', from:'Godown C', to:'Godown A', product:'Cement',   qty:'50 bags',  driver:'Suresh Patel', vehicle:'MP09TR5678', date:'2024-05-09', status:'received'   },
+];
+
+/* ---- Auth ---- */
+function selectRole(role, el) {
+  selectedRole = role;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('login-err').style.display = 'none';
+}
+
+function doLogin() {
+  if (!selectedRole) { document.getElementById('login-err').style.display = 'block'; return; }
+  currentRole = selectedRole;
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  setupUser();
+  buildNav();
+  loadPage(ROLES[currentRole].nav[0]);
+}
+
+function logout() {
+  selectedRole = null;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('sel'));
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login').style.display = 'flex';
+}
+
+function setupUser() {
+  const r = ROLES[currentRole];
+  document.getElementById('uname').textContent = r.name;
+  document.getElementById('urole').textContent = r.role;
+  document.getElementById('av').textContent = r.abbr;
+}
+
+/* ---- Navigation ---- */
+function buildNav() {
+  const nav = document.getElementById('nav');
+  const r = ROLES[currentRole];
+  let html = '<div class="nav-section">Navigation</div>';
+  r.nav.forEach(key => {
+    const n = NAV_ITEMS[key];
+    html += `<div class="nav-item" id="nav-${key}" onclick="loadPage('${key}')"><i class="ti ${n.icon}"></i>${n.label}</div>`;
+  });
+  nav.innerHTML = html;
+}
+
+function loadPage(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const ni = document.getElementById('nav-' + page);
+  if (ni) ni.classList.add('active');
+  document.getElementById('page-title').textContent = NAV_ITEMS[page]?.label || page;
+  document.getElementById('content').innerHTML = pages[page] ? pages[page]() : '<div style="color:var(--text2)">Page coming soon.</div>';
+}
+
+/* ---- Modals ---- */
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function showSuccess(title, desc, showQR, qrId) {
+  document.getElementById('success-title').textContent = title;
+  document.getElementById('success-desc').textContent  = desc;
+  const qs = document.getElementById('qr-section');
+  qs.style.display = showQR ? 'block' : 'none';
+  if (showQR) document.getElementById('qr-id').textContent = qrId || 'INV-' + (Math.floor(Math.random()*9000)+1000);
+  openModal('success-modal');
+}
+
+/* ---- Stock Inward ---- */
+function processInward() {
+  const s  = document.getElementById('iw-supplier').value || 'Unknown Supplier';
+  const p  = document.getElementById('iw-product').value;
+  const q  = document.getElementById('iw-qty').value || '0';
+  const u  = document.getElementById('iw-unit').value;
+  const g  = document.getElementById('iw-godown').value;
+  const v  = document.getElementById('iw-vehicle').value || 'N/A';
+  const id = 'INW-' + (inwardLog.length + 1).toString().padStart(3,'0');
+  inwardLog.unshift({ id, supplier:s, product:p, qty:q+' '+u, godown:g.split('–')[0].trim(), date:new Date().toISOString().slice(0,10), vehicle:v, status:'received' });
+  closeModal('inward-modal');
+  setTimeout(() => showSuccess('Stock Inward Recorded', `${q} ${u} of ${p} received at ${g.split('–')[0].trim()}. Invoice logged.`, true, id), 200);
+}
+
+/* ---- Stock Outward ---- */
+function autoAssignGodown() {
+  const qty = parseInt(document.getElementById('ow-qty').value) || 0;
+  if (qty > 0) {
+    const assigned = qty > 300 ? 'Godown A (420T available)' : qty > 150 ? 'Godown B (240T available)' : 'Godown C (140T available)';
+    document.getElementById('assign-result').textContent = assigned;
+    document.getElementById('auto-assign-row').style.display = 'block';
+  }
+}
+
+function processOutward() {
+  const c  = document.getElementById('ow-cust').value || 'Customer';
+  const p  = document.getElementById('ow-product').value;
+  const q  = document.getElementById('ow-qty').value || '0';
+  const id = 'ORD-' + (orders.length + 1).toString().padStart(3,'0');
+  orders.unshift({ id, customer:c, product:p, qty:q+' units', godown:'Godown A', date:new Date().toISOString().slice(0,10), status:'pending', val:'₹--' });
+  closeModal('outward-modal');
+  document.getElementById('auto-assign-row').style.display = 'none';
+  setTimeout(() => showSuccess('Order Created & Dispatch Slip Generated', `Order ${id} for ${c} – ${q} units of ${p}. Dispatch slip ready for printing.`, false), 200);
+}
+
+/* ---- Inter-Godown Transfer ---- */
+function processTransfer() {
+  const from = document.getElementById('tr-from').value.split('–')[0].trim();
+  const to   = document.getElementById('tr-to').value.split('–')[0].trim();
+  const p    = document.getElementById('tr-prod').value;
+  const q    = document.getElementById('tr-qty').value || '0';
+  const d    = document.getElementById('tr-driver').value || 'Driver';
+  const v    = document.getElementById('tr-vehicle').value || 'N/A';
+  const id   = 'TRF-' + (transfers.length + 1).toString().padStart(3,'0');
+  transfers.unshift({ id, from, to, product:p, qty:q+' units', driver:d, vehicle:v, date:new Date().toISOString().slice(0,10), status:'in-transit' });
+  closeModal('transfer-modal');
+  setTimeout(() => showSuccess('Transfer Initiated', `${q} units of ${p} from ${from} → ${to}. Driver ${d} notified.`, false), 200);
+}
+
+/* ---- Add User ---- */
+function addUser() {
+  const name   = document.getElementById('au-name').value   || 'New User';
+  const mobile = document.getElementById('au-mobile').value || '';
+  const role   = document.getElementById('au-role').value;
+  const godown = document.getElementById('au-godown').value;
+  const email  = document.getElementById('au-email').value  || '';
+  users.push({ name, mobile, role, godown, email, status:'active' });
+  closeModal('add-user-modal');
+  setTimeout(() => { showSuccess('Account Created', `${name} (${role}) can now log in.`, false); if (currentPage==='users') loadPage('users'); }, 200);
+}
+
+/* ---- Helpers ---- */
+function statusTag(s) {
+  const m = { received:'tag-green', dispatched:'tag-accent', delivered:'tag-green', pending:'tag-amber', 'in-transit':'tag-cyan', active:'tag-green', inactive:'tag-red' };
+  return `<span class="tag ${m[s]||'tag-amber'}">${s}</span>`;
+}
+
+/* ============================================================
+   PAGE RENDERERS
+   ============================================================ */
+const pages = {
+
+/* ---- DASHBOARD ---- */
+dashboard: () => `
+<div class="grid-4" style="margin-bottom:20px">
+  <div class="card"><div class="card-title"><i class="ti ti-building-warehouse"></i> Total Stock Value</div><div class="card-val">₹4.2Cr</div><div class="card-sub" style="color:var(--green)">↑ 8.3% this month</div></div>
+  <div class="card"><div class="card-title"><i class="ti ti-receipt"></i> Today's Sales</div><div class="card-val">₹6.8L</div><div class="card-sub" style="color:var(--green)">↑ 12 orders</div></div>
+  <div class="card"><div class="card-title"><i class="ti ti-alert-triangle"></i> Low Stock Alerts</div><div class="card-val" style="color:var(--red)">3</div><div class="card-sub">Godown B, C critical</div></div>
+  <div class="card"><div class="card-title"><i class="ti ti-clock"></i> Dead Inventory</div><div class="card-val" style="color:var(--amber)">2</div><div class="card-sub">Items >30 days</div></div>
+</div>
+<div class="grid-2" style="margin-bottom:20px">
+  <div>
+    <div class="section-title">Godown-wise Stock Summary</div>
+    <div class="card">
+      ${[['Godown A – Indore',78,'var(--green)'],['Godown B – Dewas',52,'var(--amber)'],['Godown C – Ujjain',35,'var(--red)']].map(([g,p,c])=>`
+      <div class="godown-bar">
+        <div class="godown-label"><span>${g}</span><span style="color:${c}">${p}% capacity</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${p}%;background:${c}"></div></div>
+      </div>`).join('')}
+      <div style="margin-top:12px">
+        <table><thead><tr><th>Product</th><th>Godown A</th><th>Godown B</th><th>Godown C</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td><b>TMT Bars</b></td><td>120T</td><td>80T</td><td>40T</td><td><b>240T</b></td></tr>
+          <tr><td><b>Cement</b></td><td>500 bags</td><td>200 bags</td><td>100 bags</td><td><b>800 bags</b></td></tr>
+          <tr><td><b>Steel Rods</b></td><td>30T</td><td>15T</td><td>25T</td><td><b>70T</b></td></tr>
+          <tr><td><b>Bricks</b></td><td>5000 pcs</td><td>2000 pcs</td><td>1000 pcs</td><td><b>8000 pcs</b></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="section-title">Recent Activity</div>
+    <div class="card">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-content"><div class="tl-main">500 bags Cement received at Godown A</div><div class="tl-sub">Supplier: Shree Cement · INW-001</div></div><div class="tl-time">10:30 AM</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--accent)"></div><div class="tl-content"><div class="tl-main">Order ORD-001 dispatched to Raj Constructions</div><div class="tl-sub">50T TMT Bars · ₹18,00,000</div></div><div class="tl-time">9:15 AM</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--cyan)"></div><div class="tl-content"><div class="tl-main">Transfer TRF-001: A→B 100T TMT Bars</div><div class="tl-sub">Driver: Ramesh Kumar · In Transit</div></div><div class="tl-time">8:00 AM</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-content"><div class="tl-main">⚠ Low stock alert: Cement at Godown C</div><div class="tl-sub">100 bags remaining – minimum 200 required</div></div><div class="tl-time">Yesterday</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-content"><div class="tl-main">Quotation QT-089 sent to Mahesh Infra</div><div class="tl-sub">20T Steel Rods · ₹9,60,000</div></div><div class="tl-time">Yesterday</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section-title">Low Stock & Dead Inventory Alerts</div>
+<div class="grid-2">
+  <div class="card">
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--red)"><i class="ti ti-alert-circle"></i> Low Stock</div>
+    <div class="alert alert-red"><i class="ti ti-alert-circle"></i><div><b>Cement</b> – Godown C: 100 bags (min: 200)</div></div>
+    <div class="alert alert-red"><i class="ti ti-alert-circle"></i><div><b>Steel Rods</b> – Godown B: 15T (min: 20T)</div></div>
+    <div class="alert alert-amber"><i class="ti ti-alert-triangle"></i><div><b>Bricks</b> – Godown C: 1000 pcs (min: 2000)</div></div>
+  </div>
+  <div class="card">
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--amber)"><i class="ti ti-clock"></i> Dead Inventory (>30 days no movement)</div>
+    <div class="alert alert-amber"><i class="ti ti-clock"></i><div><b>Bricks</b> – Godown A: 5000 pcs · Last moved 47 days ago</div></div>
+    <div class="alert alert-amber"><i class="ti ti-clock"></i><div><b>Sand</b> – Godown B: 200 tons · Last moved 38 days ago</div></div>
+  </div>
+</div>`,
+
+/* ---- STOCK OVERVIEW ---- */
+stock: () => `
+<div class="section-title">Multi-Godown Stock Overview
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-primary btn-sm" onclick="openModal('inward-modal')"><i class="ti ti-plus"></i> Inward</button>
+    <button class="btn btn-ghost btn-sm" onclick="openModal('outward-modal')"><i class="ti ti-minus"></i> Outward</button>
+    <button class="btn btn-ghost btn-sm" onclick="openModal('transfer-modal')"><i class="ti ti-arrows-transfer-up"></i> Transfer</button>
+  </div>
+</div>
+<div class="card" style="margin-bottom:16px">
+<table>
+<thead><tr><th>Product</th><th>Godown A – Indore</th><th>Godown B – Dewas</th><th>Godown C – Ujjain</th><th>Total</th><th>Min Stock</th><th>Status</th></tr></thead>
+<tbody>
+  <tr><td><b>TMT Bars</b></td><td>120 tons</td><td>80 tons</td><td>40 tons</td><td><b>240 tons</b></td><td>50T</td><td><span class="tag tag-green">OK</span></td></tr>
+  <tr><td><b>Cement</b></td><td>500 bags</td><td>200 bags</td><td>100 bags</td><td><b>800 bags</b></td><td>200 bags</td><td><span class="tag tag-amber">Low at C</span></td></tr>
+  <tr><td><b>Steel Rods</b></td><td>30 tons</td><td>15 tons</td><td>25 tons</td><td><b>70 tons</b></td><td>20T</td><td><span class="tag tag-red">Low at B</span></td></tr>
+  <tr><td><b>Bricks</b></td><td>5000 pcs</td><td>2000 pcs</td><td>1000 pcs</td><td><b>8000 pcs</b></td><td>2000</td><td><span class="tag tag-amber">Dead at A</span></td></tr>
+  <tr><td><b>Sand</b></td><td>50 tons</td><td>200 tons</td><td>80 tons</td><td><b>330 tons</b></td><td>30T</td><td><span class="tag tag-green">OK</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid-3">
+  ${[
+    ['Godown A – Indore','78%','var(--green)','₹1.8Cr','520 tons / bags'],
+    ['Godown B – Dewas', '52%','var(--amber)','₹1.2Cr','350 tons / bags'],
+    ['Godown C – Ujjain','35%','var(--red)',  '₹0.8Cr','245 tons / bags']
+  ].map(([g,p,c,v,s]) => `
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:8px">${g}</div>
+    <div style="font-size:24px;font-weight:800;color:${c}">${p}</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Capacity used · ${s}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${p};background:${c}"></div></div>
+    <div style="margin-top:10px;font-size:12px;color:var(--text2)">Stock Value: <b style="color:var(--text)">${v}</b></div>
+  </div>`).join('')}
+</div>`,
+
+/* ---- STOCK INWARD ---- */
+inward: () => `
+<div class="section-title">Stock Inward <button class="btn btn-primary btn-sm" onclick="openModal('inward-modal')"><i class="ti ti-plus"></i> New Inward Entry</button></div>
+<div class="card">
+<table>
+<thead><tr><th>ID</th><th>Supplier</th><th>Product</th><th>Quantity</th><th>Godown</th><th>Date</th><th>Vehicle</th><th>Status</th><th>QR</th></tr></thead>
+<tbody>${inwardLog.map(r => `<tr>
+  <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">${r.id}</code></td>
+  <td>${r.supplier}</td><td>${r.product}</td><td>${r.qty}</td><td>${r.godown}</td><td>${r.date}</td>
+  <td style="font-size:11px">${r.vehicle}</td>
+  <td>${statusTag(r.status)}</td>
+  <td><div style="width:32px;height:32px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer" title="View QR">⬛</div></td>
+</tr>`).join('')}</tbody>
+</table>
+</div>`,
+
+/* ---- STOCK OUTWARD ---- */
+outward: () => `
+<div class="section-title">Stock Outward / Orders <button class="btn btn-primary btn-sm" onclick="openModal('outward-modal')"><i class="ti ti-plus"></i> New Order</button></div>
+<div class="card">
+<table>
+<thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Quantity</th><th>Godown</th><th>Date</th><th>Value</th><th>Status</th></tr></thead>
+<tbody>${orders.map(r => `<tr>
+  <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">${r.id}</code></td>
+  <td>${r.customer}</td><td>${r.product}</td><td>${r.qty}</td><td>${r.godown}</td><td>${r.date}</td>
+  <td style="font-weight:600">${r.val}</td><td>${statusTag(r.status)}</td>
+</tr>`).join('')}</tbody>
+</table>
+</div>`,
+
+/* ---- TRANSFER ---- */
+transfer: () => `
+<div class="section-title">Inter-Godown Transfers <button class="btn btn-primary btn-sm" onclick="openModal('transfer-modal')"><i class="ti ti-plus"></i> New Transfer</button></div>
+<div class="card">
+<table>
+<thead><tr><th>ID</th><th>From</th><th>To</th><th>Product</th><th>Qty</th><th>Driver</th><th>Vehicle</th><th>Date</th><th>Status</th></tr></thead>
+<tbody>${transfers.map(r => `<tr>
+  <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">${r.id}</code></td>
+  <td>${r.from}</td><td>${r.to}</td><td>${r.product}</td><td>${r.qty}</td>
+  <td>${r.driver}</td><td style="font-size:11px">${r.vehicle}</td><td>${r.date}</td>
+  <td>${statusTag(r.status)}</td>
+</tr>`).join('')}</tbody>
+</table>
+</div>`,
+
+/* ---- SALES ---- */
+sales: () => `
+<div class="grid-4" style="margin-bottom:16px">
+  <div class="card"><div class="card-title">Today Revenue</div><div class="card-val">₹6.8L</div><div class="card-sub" style="color:var(--green)">↑ 14%</div></div>
+  <div class="card"><div class="card-title">This Month</div><div class="card-val">₹42L</div><div class="card-sub" style="color:var(--green)">↑ 8.3%</div></div>
+  <div class="card"><div class="card-title">Orders Today</div><div class="card-val">12</div><div class="card-sub">3 pending</div></div>
+  <div class="card"><div class="card-title">Pending Amount</div><div class="card-val" style="color:var(--amber)">₹12L</div><div class="card-sub">4 customers</div></div>
+</div>
+<div class="section-title">All Orders <button class="btn btn-primary btn-sm" onclick="openModal('outward-modal')"><i class="ti ti-plus"></i> New Order</button></div>
+<div class="card">
+<table>
+<thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Quantity</th><th>Value</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+<tbody>${orders.map(r => `<tr>
+  <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">${r.id}</code></td>
+  <td>${r.customer}</td><td>${r.product}</td><td>${r.qty}</td>
+  <td style="font-weight:600">${r.val}</td><td>${r.date}</td>
+  <td>${statusTag(r.status)}</td>
+  <td><button class="btn btn-ghost btn-sm"><i class="ti ti-file-invoice"></i></button></td>
+</tr>`).join('')}</tbody>
+</table>
+</div>`,
+
+/* ---- PURCHASES ---- */
+purchases: () => `
+<div class="section-title">Purchase Approval Queue</div>
+<div class="card">
+<table>
+<thead><tr><th>PO Number</th><th>Supplier</th><th>Product</th><th>Qty</th><th>Value</th><th>Requested By</th><th>Date</th><th>Action</th></tr></thead>
+<tbody>
+  <tr>
+    <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">PO-001</code></td>
+    <td>Shree Cement</td><td>Cement</td><td>1000 bags</td><td>₹3.8L</td><td>Vijay Patel</td><td>2024-05-12</td>
+    <td style="display:flex;gap:6px">
+      <button class="btn btn-sm" style="background:var(--green-bg);color:var(--green);border:1px solid rgba(34,197,94,.2)"><i class="ti ti-check"></i> Approve</button>
+      <button class="btn btn-danger btn-sm"><i class="ti ti-x"></i> Reject</button>
+    </td>
+  </tr>
+  <tr>
+    <td><code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">PO-002</code></td>
+    <td>TATA Steel</td><td>TMT Bars</td><td>200 tons</td><td>₹72L</td><td>Arun Sharma</td><td>2024-05-11</td>
+    <td style="display:flex;gap:6px">
+      <button class="btn btn-sm" style="background:var(--green-bg);color:var(--green);border:1px solid rgba(34,197,94,.2)"><i class="ti ti-check"></i> Approve</button>
+      <button class="btn btn-danger btn-sm"><i class="ti ti-x"></i> Reject</button>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>`,
+
+/* ---- PROFITS ---- */
+profits: () => `
+<div class="grid-4" style="margin-bottom:16px">
+  <div class="card"><div class="card-title">Gross Profit (May)</div><div class="card-val" style="color:var(--green)">₹8.4L</div><div class="card-sub" style="color:var(--green)">↑ 11.2%</div></div>
+  <div class="card"><div class="card-title">Margin %</div><div class="card-val">18.4%</div><div class="card-sub">Industry avg: 15%</div></div>
+  <div class="card"><div class="card-title">Purchase Cost</div><div class="card-val">₹37.2L</div><div class="card-sub">This month</div></div>
+  <div class="card"><div class="card-title">Operating Exp</div><div class="card-val">₹2.1L</div><div class="card-sub">Transport, wages</div></div>
+</div>
+<div class="grid-2">
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:12px">Product-wise Profit</div>
+    <table><thead><tr><th>Product</th><th>Revenue</th><th>Cost</th><th>Profit</th><th>Margin</th></tr></thead>
+    <tbody>
+      <tr><td>TMT Bars</td><td>₹21L</td><td>₹17.5L</td><td style="color:var(--green)">₹3.5L</td><td>16.7%</td></tr>
+      <tr><td>Cement</td><td>₹8.4L</td><td>₹6.5L</td><td style="color:var(--green)">₹1.9L</td><td>22.6%</td></tr>
+      <tr><td>Steel Rods</td><td>₹12L</td><td>₹9.8L</td><td style="color:var(--green)">₹2.2L</td><td>18.3%</td></tr>
+    </tbody></table>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:12px">Godown-wise Contribution</div>
+    ${[['Godown A','₹4.2L','50%'],['Godown B','₹2.8L','33%'],['Godown C','₹1.4L','17%']].map(([g,p,pct]) => `
+    <div class="godown-bar" style="margin-bottom:12px">
+      <div class="godown-label"><span>${g}</span><span style="color:var(--green)">${p} (${pct})</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct};background:var(--green)"></div></div>
+    </div>`).join('')}
+  </div>
+</div>`,
+
+/* ---- ACCOUNTS ---- */
+accounts: () => `
+<div class="grid-4" style="margin-bottom:16px">
+  <div class="card"><div class="card-title">Total Receivable</div><div class="card-val" style="color:var(--amber)">₹18.4L</div><div class="card-sub">7 parties</div></div>
+  <div class="card"><div class="card-title">Total Payable</div><div class="card-val" style="color:var(--red)">₹12.1L</div><div class="card-sub">4 suppliers</div></div>
+  <div class="card"><div class="card-title">Cash in Hand</div><div class="card-val" style="color:var(--green)">₹4.2L</div><div class="card-sub">Updated today</div></div>
+  <div class="card"><div class="card-title">Bank Balance</div><div class="card-val" style="color:var(--green)">₹28.6L</div><div class="card-sub">All accounts</div></div>
+</div>
+<div class="grid-2">
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:12px">Customer Ledger (Receivables)</div>
+    <table><thead><tr><th>Customer</th><th>Amount Due</th><th>Days</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Raj Constructions</td><td style="color:var(--amber)">₹6L</td><td>15</td><td><span class="tag tag-amber">Pending</span></td></tr>
+      <tr><td>Mahesh Infra</td><td style="color:var(--red)">₹4.2L</td><td>42</td><td><span class="tag tag-red">Overdue</span></td></tr>
+      <tr><td>Dev Builders</td><td style="color:var(--amber)">₹2.8L</td><td>8</td><td><span class="tag tag-amber">Pending</span></td></tr>
+      <tr><td>Ravi Realty</td><td style="color:var(--green)">₹1.4L</td><td>3</td><td><span class="tag tag-green">Recent</span></td></tr>
+    </tbody></table>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:12px">Supplier Ledger (Payables)</div>
+    <table><thead><tr><th>Supplier</th><th>Amount Due</th><th>Due Date</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Shree Cement</td><td style="color:var(--red)">₹5.2L</td><td>May 15</td><td><span class="tag tag-red">Due Soon</span></td></tr>
+      <tr><td>TATA Steel</td><td style="color:var(--amber)">₹4.8L</td><td>May 22</td><td><span class="tag tag-amber">Upcoming</span></td></tr>
+      <tr><td>ACC Ltd</td><td style="color:var(--amber)">₹2.1L</td><td>May 30</td><td><span class="tag tag-green">OK</span></td></tr>
+    </tbody></table>
+  </div>
+</div>`,
+
+/* ---- USER MANAGEMENT ---- */
+users: () => `
+<div class="section-title">User Management & Accounts
+  <button class="btn btn-primary btn-sm" onclick="openModal('add-user-modal')"><i class="ti ti-user-plus"></i> Add Account</button>
+</div>
+<div class="grid-4" style="margin-bottom:16px">
+  ${[['Owner','1','--amber','ti-crown'],['Manager','1','--accent','ti-briefcase'],['Godown Incharge','1','--green','ti-building-warehouse'],['Staff','2','--purple','ti-users']].map(([r,c,col,ico]) => `
+  <div class="card"><div class="card-title"><i class="ti ${ico}" style="color:var(${col})"></i> ${r}</div><div class="card-val">${c}</div></div>`).join('')}
+</div>
+<div class="card">
+<table>
+<thead><tr><th>Name</th><th>Role</th><th>Godown</th><th>Mobile</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody>
+  <tr>
+    <td><b>You (Owner)</b></td>
+    <td><span class="chip"><i class="ti ti-crown" style="color:var(--amber);font-size:13px"></i> Owner</span></td>
+    <td>All</td><td>—</td><td>—</td>
+    <td><span class="tag tag-green">active</span></td>
+    <td>—</td>
+  </tr>
+  ${users.map(u => `<tr>
+    <td><b>${u.name}</b></td>
+    <td><span class="chip">${u.role}</span></td>
+    <td style="font-size:12px">${u.godown}</td>
+    <td style="font-size:12px">${u.mobile}</td>
+    <td style="font-size:12px">${u.email}</td>
+    <td>${statusTag(u.status)}</td>
+    <td style="display:flex;gap:6px">
+      <button class="btn btn-ghost btn-sm"><i class="ti ti-edit"></i></button>
+      <button class="btn btn-danger btn-sm"><i class="ti ti-trash"></i></button>
+    </td>
+  </tr>`).join('')}
+</tbody>
+</table>
+</div>`,
+
+/* ---- DELIVERY ---- */
+delivery: () => `
+<div class="section-title">Today's Delivery Schedule</div>
+<div class="grid-4" style="margin-bottom:16px">
+  <div class="card"><div class="card-title">Total Deliveries</div><div class="card-val">8</div></div>
+  <div class="card"><div class="card-title">Completed</div><div class="card-val" style="color:var(--green)">3</div></div>
+  <div class="card"><div class="card-title">In Transit</div><div class="card-val" style="color:var(--cyan)">2</div></div>
+  <div class="card"><div class="card-title">Pending</div><div class="card-val" style="color:var(--amber)">3</div></div>
+</div>
+<div class="card">
+<table>
+<thead><tr><th>#</th><th>Customer</th><th>Address</th><th>Product</th><th>Qty</th><th>Time Slot</th><th>Status</th></tr></thead>
+<tbody>
+  <tr><td>1</td><td>Raj Constructions</td><td>Plot 45, Industrial Area</td><td>TMT Bars</td><td>50T</td><td>9:00–11:00 AM</td><td><span class="tag tag-green">delivered</span></td></tr>
+  <tr><td>2</td><td>Dev Builders</td><td>Scheme 54, Vijay Nagar</td><td>Cement</td><td>100 bags</td><td>11:00–1:00 PM</td><td><span class="tag tag-green">delivered</span></td></tr>
+  <tr><td>3</td><td>Shyam Traders</td><td>MR-9, AB Road</td><td>Steel Rods</td><td>10T</td><td>1:00–3:00 PM</td><td><span class="tag tag-cyan">in-transit</span></td></tr>
+  <tr><td>4</td><td>Mahesh Infra</td><td>Bypass Road, Dewas</td><td>Bricks</td><td>2000 pcs</td><td>3:00–5:00 PM</td><td><span class="tag tag-amber">pending</span></td></tr>
+  <tr><td>5</td><td>Ravi Realty</td><td>New Palasia, Indore</td><td>TMT Bars</td><td>30T</td><td>5:00–7:00 PM</td><td><span class="tag tag-amber">pending</span></td></tr>
+</tbody>
+</table>
+</div>`
+
+}; // end pages
+</script>
+</body>
+</html>
