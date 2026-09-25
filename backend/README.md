@@ -130,3 +130,31 @@ curl -X POST http://localhost:5000/api/users \
   -H "Authorization: Bearer $TOKEN" \
   -d '{"name":"Staff One","email":"staff@example.com","password":"password123"}'
 ```
+
+## CORS
+
+- Development: with `CORS_ORIGINS` empty (the default), CORS is open and
+  the server logs a warning. This keeps local emulator/device testing easy.
+- Production: set `CORS_ORIGINS` to a comma-separated allowlist of your real
+  frontend origin(s), e.g. `CORS_ORIGINS=https://app.example.com`.
+  Browser clients from other origins are then blocked. Native mobile apps
+  and curl are unaffected by CORS either way.
+- Never commit real domains or secrets to source control — configure them
+  through environment variables on the host.
+
+## Authentication rate limiting
+
+- `POST /api/auth/login` and `POST /api/auth/register` are rate limited
+  per IP via `express-rate-limit` (see `src/middleware/rateLimit.js`).
+- Configured with `AUTH_RATE_LIMIT_WINDOW_MS` (default 900000 = 15 min)
+  and `AUTH_RATE_LIMIT_MAX` (default 100). In production use a lower
+  limit such as 10–20 requests per 15 minutes.
+- Authenticated routes (`GET /api/auth/me`, users, godowns, inventory)
+  and health checks are NOT rate limited.
+- Exceeding the limit returns HTTP `429` in the standard envelope:
+  `{ "success": false, "message": "Too many authentication attempts. Please try again later." }`
+- The app trusts the first hosting proxy (`trust proxy`) so client IPs
+  are detected correctly behind Render/Heroku-style proxies.
+- The default in-memory store is per-process and suits a single instance.
+  When running multiple backend instances, switch to an external store
+  (e.g. Redis) so limits are shared.
