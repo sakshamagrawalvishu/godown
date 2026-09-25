@@ -82,12 +82,15 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Retained for API completeness (the backend endpoint now creates
+  /// STAFF only and rejects OWNER with 403). The app has no public
+  /// registration UI: owners are seeded server-side and staff are
+  /// created by owners via StaffProvider.
   Future<bool> register({required String name, required String email, required String password}) async {
     busy = true;
     errorMessage = null;
     notifyListeners();
     try {
-      // New mobile users are owners; staff are created by owners server-side.
       final result = await _serviceOverride.register(
         name: name.trim(),
         email: email.trim(),

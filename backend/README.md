@@ -27,8 +27,16 @@ Unknown routes return `404 { "success": false, "message": "Route not found: ..."
 
 ## Auth APIs
 
+Public registration NEVER creates OWNER accounts. It creates STAFF accounts
+only; an explicit `"role":"OWNER"` is rejected with `403`.
+
 ```bash
-# Register (role: OWNER or STAFF, defaults to STAFF)
+# Register (creates STAFF; role may be omitted or "STAFF")
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Staff One","email":"staff@example.com","password":"password123"}'
+
+# Rejected: public callers cannot choose OWNER (403)
 curl -X POST http://localhost:5000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Owner One","email":"owner@example.com","password":"password123","role":"OWNER"}'
@@ -43,6 +51,20 @@ curl http://localhost:5000/api/auth/me \
   -H "Authorization: Bearer <JWT_TOKEN>"
 ```
 
+## Creating the initial OWNER
+
+OWNER accounts are provisioned out-of-band with the seed script (never via
+the public API). Credentials come only from environment variables and are
+never printed or committed. Safe to re-run: if the owner already exists,
+nothing is created.
+
+```bash
+ADMIN_EMAIL=owner@example.com ADMIN_PASSWORD=<secret> npm run seed:owner
+```
+
+Day-to-day staff provisioning stays OWNER-only through the authenticated
+endpoint (see "Owner creates staff" below) — that flow is unchanged.
+
 ## Connecting MongoDB Atlas later
 
 1. Create a free Atlas cluster and database user.
@@ -56,7 +78,7 @@ curl http://localhost:5000/api/auth/me \
 
 Auth:
 
-- `POST /api/auth/register` — public, creates OWNER or STAFF, returns JWT
+- `POST /api/auth/register` — public, creates STAFF only (explicit `"role":"OWNER"` is rejected with 403), returns JWT
 - `POST /api/auth/login` — public, returns JWT + safe user
 - `GET /api/auth/me` — protected, returns own safe profile
 

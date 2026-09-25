@@ -4,13 +4,17 @@
  * - Passwords are hashed by the User model pre-save hook.
  * - Password hashes never leave the server (select: false + toSafeJSON).
  * - Login uses a generic error so callers can't probe which emails exist.
+ * - Public registration NEVER creates OWNER accounts (fail-closed):
+ *   an explicit role of OWNER is rejected with 403, and any other value
+ *   (including omitted) creates a STAFF account. OWNER accounts are
+ *   provisioned out-of-band (see scripts/seed-owner.js). Existing OWNER
+ *   accounts continue to log in normally.
  */
 
 const User = require('../models/User');
 const asyncHandler = require('../utils/asyncHandler');
 const { signToken } = require('../utils/jwt');
 
-const VALID_ROLES = ['OWNER', 'STAFF'];
 const EMAIL_RE = /^\S+@\S+\.\S+$/;
 
 const register = asyncHandler(async (req, res) => {
@@ -26,9 +30,16 @@ const register = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: 'Password must be at least 6 characters.' });
   }
 
-  const normalizedRole = role ? String(role).toUpperCase() : 'STAFF';
-  if (!VALID_ROLES.includes(normalizedRole)) {
-    return res.status(400).json({ success: false, message: 'Role must be OWNER or STAFF.' });
+  // Fail-closed: public callers must never be able to choose OWNER.
+  // OWNER accounts are provisioned out-of-band (scripts/seed-owner.js).
+  if (role && String(role).toUpperCase() === 'OWNER') {
+    return res.status(403).json({
+      success: false,
+      message: 'Owner registration is disabled. Contact an administrator.',
+    });
+  }
+  if (role && String(role).toUpperCase() !== 'STAFF') {
+    return res.status(400).json({ success: false, message: 'Role must be STAFF.' });
   }
 
   const normalizedEmail = String(email).toLowerCase().trim();
@@ -41,7 +52,7 @@ const register = asyncHandler(async (req, res) => {
     name: String(name).trim(),
     email: normalizedEmail,
     password,
-    role: normalizedRole,
+    role: 'STAFF',
   });
 
   const token = signToken(user);

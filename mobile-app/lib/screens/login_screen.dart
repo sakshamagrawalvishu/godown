@@ -88,10 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
                         : const Text('Log in'),
                   ),
-                  TextButton(
-                    onPressed: () => context.go('/register'),
-                    child: const Text("No account? Register as Owner"),
-                  ),
                 ],
               ),
             ),

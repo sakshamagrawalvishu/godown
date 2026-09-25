@@ -7,15 +7,18 @@ import '../screens/godown_form_screen.dart';
 import '../screens/godown_list_screen.dart';
 import '../screens/inventory_form_screen.dart';
 import '../screens/login_screen.dart';
-import '../screens/register_screen.dart';
 import '../screens/splash_screen.dart';
 import '../screens/staff_create_screen.dart';
 import '../screens/staff_list_screen.dart';
 
 /// App navigation (go_router), driven by [AuthProvider] status.
 ///
-/// Splash/Auth check -> Login/Register -> Dashboard -> My Godowns
+/// Splash/Auth check -> Login -> Dashboard -> My Godowns
 /// -> Create/Edit Godown -> Godown Details -> Add/Edit Inventory.
+///
+/// Login is the normal entry point: public Owner self-registration was
+/// removed to match the backend lockdown (POST /api/auth/register rejects
+/// role OWNER). Owners are seeded server-side; staff are created by owners.
 GoRouter buildRouter(AuthProvider auth) {
   return GoRouter(
     refreshListenable: auth,
@@ -27,14 +30,14 @@ GoRouter buildRouter(AuthProvider auth) {
 
       if (checking) return loc == '/splash' ? null : '/splash';
       if (!loggedIn) {
-        return (loc == '/login' || loc == '/register') ? null : '/login';
+        return loc == '/login' ? null : '/login';
       }
       // Staff management is Owner-only in the UI (backend also enforces
       // 403 for STAFF tokens). Bounce STAFF deep-links back to dashboard.
       if ((loc == '/staff' || loc.startsWith('/staff/')) && !auth.isOwner) {
         return '/dashboard';
       }
-      if (loc == '/splash' || loc == '/login' || loc == '/register' || loc == '/') {
+      if (loc == '/splash' || loc == '/login' || loc == '/') {
         return '/dashboard';
       }
       return null;
@@ -42,7 +45,6 @@ GoRouter buildRouter(AuthProvider auth) {
     routes: [
       GoRoute(path: '/splash', builder: (c, s) => const SplashScreen()),
       GoRoute(path: '/login', builder: (c, s) => const LoginScreen()),
-      GoRoute(path: '/register', builder: (c, s) => const RegisterScreen()),
       GoRoute(path: '/dashboard', builder: (c, s) => const DashboardScreen()),
       GoRoute(path: '/staff', builder: (c, s) => const StaffListScreen()),
       GoRoute(path: '/staff/new', builder: (c, s) => const StaffCreateScreen()),
