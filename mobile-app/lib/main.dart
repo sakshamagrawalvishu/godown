@@ -11,12 +11,13 @@ import 'services/inventory_service.dart';
 import 'services/staff_service.dart';
 
 /// Godown Management — Owner flow:
-/// Splash/Auth check -> Login/Register -> Dashboard -> My Godowns
+/// Splash/Auth check -> Login -> Dashboard -> My Godowns
 /// -> Create/Edit Godown -> Details -> Inventory CRUD.
 ///
 /// Backend base URL defaults to the Android-emulator alias
-/// `http://10.0.2.2:5000` and is overridable via:
-/// `flutter run --dart-define=API_BASE_URL=http://HOST:5000`
+/// `http://10.0.2.2:5000` for local development. Production builds MUST
+/// pass an explicit HTTPS host (release builds block cleartext HTTP):
+/// `flutter build appbundle --release --dart-define=API_BASE_URL=https://<production-host>`
 void main() {
   runApp(const GodownApp());
 }

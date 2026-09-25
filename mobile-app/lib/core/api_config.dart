@@ -1,10 +1,15 @@
 /// Central API configuration.
 ///
-/// The backend runs on port 5000 in development.
-/// `localhost` does not reach the host from an Android emulator, so the
-/// default targets the emulator loopback alias `10.0.2.2`.
+/// Development default is the Android-emulator loopback alias
+/// `10.0.2.2` (plain HTTP is fine on the emulator; Android blocks
+/// cleartext HTTP in release builds, so production MUST use HTTPS).
 ///
-/// Override for a physical device / custom host without code changes:
+/// PRODUCTION: always build with an explicit HTTPS host, never rely on
+/// the default below:
+///   `flutter build appbundle --release --dart-define=API_BASE_URL=https://<production-host>`
+/// (No production URL is hardcoded here on purpose.)
+///
+/// Local overrides without code changes:
 ///   flutter run --dart-define=API_BASE_URL=http://192.168.1.10:5000
 class ApiConfig {
   static const String baseUrl = String.fromEnvironment(

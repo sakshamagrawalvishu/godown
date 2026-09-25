@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Minimal warehouse/godown glyph for the launcher foreground.
+     Centered in the 108dp adaptive-icon grid (safe zone respected);
+     the doorway is cut in the background color. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,60 L54,32 L84,60 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,60 L78,60 L78,90 L30,90 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_background"
+        android:pathData="M48,90 L48,72 L60,72 L60,90 Z" />
+</vector>
