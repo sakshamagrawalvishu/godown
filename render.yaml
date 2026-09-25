@@ -1,0 +1,35 @@
+# Render Blueprint — Godown Management backend API.
+#
+# Deploy via: Render Dashboard → New → Blueprint → select this repo.
+# Secrets are NEVER stored in this file. Variables marked `sync: false`
+# must be entered manually as environment variables in the Render
+# dashboard (Render will prompt for them on first deploy).
+# One-off owner seeding is done later via the service Shell tab and is
+# intentionally NOT part of this blueprint (see README in backend/).
+
+services:
+  - type: web
+    name: godown-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: AUTH_RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: AUTH_RATE_LIMIT_MAX
+        value: 20
+      # Secrets below must be set manually in the Render dashboard.
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
