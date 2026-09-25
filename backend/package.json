@@ -1,0 +1,24 @@
+{
+  "name": "godown-backend",
+  "version": "0.1.0",
+  "description": "Godown Management System backend API (Node.js + Express) — Phase B scaffold",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.5",
+    "morgan": "^1.10.0"
+  }
+}
